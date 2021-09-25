@@ -25,5 +25,6 @@ private:
     Ui::Papabom *ui;
     QGraphicsScene *scene;
     vector <QGraphicsRectItem *> bloques;
+
 };
 #endif // PAPABOM_H
