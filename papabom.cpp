@@ -41,9 +41,8 @@ Papabom::Papabom(QWidget *parent)
       }
 
      //creación personaje
-     PerSal.push_back(scene->addRect(44,44,ancho,alto,pen2,brushpersonaje));
-     PerSal.front()->setFlag(QGraphicsItem::ItemIsFocusable);
-     PerSal.front()->setFocus();
+     PerSal.push_back(scene->addRect(45,45,ancho-2,alto-2,pen2,brushpersonaje));
+
 
      //Creación de la puerta
 
@@ -99,26 +98,80 @@ Papabom::~Papabom()
     delete ui;
 }
 
+
+//--------------------------------------------------------
+// Movimiento de personaje y colision con cajas y bloques|
+//--------------------------------------------------------
+bool colision=false; //Para verificar colission
 void Papabom::keyPressEvent(QKeyEvent *e)
 {
     switch (e->key()) {
     case Qt::Key_A:
         PerSal.front()->setPos(PerSal.front()->x()-44,PerSal.front()->y());
-
+        for(auto i :bloques){
+            colision=PerSal.front()->collidesWithItem(i);
+        if (colision==true){
+            PerSal.front()->setPos(PerSal.front()->x()+44,PerSal.front()->y());
+            colision=false;
+        }}
+        for(auto c :cajas){
+            colision=PerSal.front()->collidesWithItem(c);
+        if (colision==true){
+            PerSal.front()->setPos(PerSal.front()->x()+44,PerSal.front()->y());
+            colision=false;
+        }}
         break;
 
     case Qt::Key_D:
         PerSal.front()->setPos(PerSal.front()->x()+44,PerSal.front()->y());
+        for(auto i :bloques){
+            colision=PerSal.front()->collidesWithItem(i);
+        if (colision==true){
+            PerSal.front()->setPos(PerSal.front()->x()-44,PerSal.front()->y());
+            colision=false;
+        }}
+        for(auto c :cajas){
+            colision=PerSal.front()->collidesWithItem(c);
+        if (colision==true){
+            PerSal.front()->setPos(PerSal.front()->x()-44,PerSal.front()->y());
+            colision=false;
+        }}
         break;
+
 
     case Qt::Key_W:
         PerSal.front()->setPos(PerSal.front()->x(),PerSal.front()->y()-44);
+        for(auto i :bloques){
+            colision=PerSal.front()->collidesWithItem(i);
+        if (colision==true){
+            PerSal.front()->setPos(PerSal.front()->x(),PerSal.front()->y()+44);
+            colision=false;
+        }}
+        for(auto c :cajas){
+            colision=PerSal.front()->collidesWithItem(c);
+        if (colision==true){
+            PerSal.front()->setPos(PerSal.front()->x(),PerSal.front()->y()+44);
+            colision=false;
+        }}
         break;
 
     case Qt::Key_S:
         PerSal.front()->setPos(PerSal.front()->x(),PerSal.front()->y()+44);
+        for(auto i :bloques){
+            colision=PerSal.front()->collidesWithItem(i);
+        if (colision==true){
+            PerSal.front()->setPos(PerSal.front()->x(),PerSal.front()->y()-44);
+            colision=false;
+        }}
+        for(auto c :cajas){
+            colision=PerSal.front()->collidesWithItem(c);
+        if (colision==true){
+            PerSal.front()->setPos(PerSal.front()->x(),PerSal.front()->y()-44);
+            colision=false;
+        }}
         break;
     }
+    ui->graphicsView->setSceneRect(PerSal.front()->x(),PerSal.front()->y(),44,44);
 }
 
 

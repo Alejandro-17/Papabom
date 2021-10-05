@@ -32,6 +32,7 @@ class Papabom : public QMainWindow
 public:
     Papabom(QWidget *parent = nullptr);
     ~Papabom();
+    list <QGraphicsRectItem *> PerSal;
 
 protected:
     void keyPressEvent(QKeyEvent *e);
@@ -44,7 +45,7 @@ private:
     list <QGraphicsRectItem *> bloques;
     list <QGraphicsRectItem *> cajas;
     list <QGraphicsRectItem *> enemigos;
-    list <QGraphicsRectItem *> PerSal;
+   // list <QGraphicsRectItem *> PerSal;
 
 
 
