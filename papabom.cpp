@@ -99,4 +99,26 @@ Papabom::~Papabom()
     delete ui;
 }
 
+void Papabom::keyPressEvent(QKeyEvent *e)
+{
+    switch (e->key()) {
+    case Qt::Key_A:
+        PerSal.front()->setPos(PerSal.front()->x()-44,PerSal.front()->y());
+
+        break;
+
+    case Qt::Key_D:
+        PerSal.front()->setPos(PerSal.front()->x()+44,PerSal.front()->y());
+        break;
+
+    case Qt::Key_W:
+        PerSal.front()->setPos(PerSal.front()->x(),PerSal.front()->y()-44);
+        break;
+
+    case Qt::Key_S:
+        PerSal.front()->setPos(PerSal.front()->x(),PerSal.front()->y()+44);
+        break;
+    }
+}
+
 

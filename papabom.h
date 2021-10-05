@@ -9,6 +9,7 @@
 #include <QKeyEvent>
 #include <QRandomGenerator>
 #include <QTimer>
+#include <QDebug>
 
 
 
@@ -33,7 +34,7 @@ public:
     ~Papabom();
 
 protected:
-    void keyPressEvent(QkeyEvent *e);
+    void keyPressEvent(QKeyEvent *e);
 
 
 
