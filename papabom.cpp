@@ -170,8 +170,27 @@ void Papabom::keyPressEvent(QKeyEvent *e)
             colision=false;
         }}
         break;
+
+    case Qt::Key_Space:
+        QPen pen3(Qt::black, 0, Qt::SolidLine, Qt::SquareCap, Qt::RoundJoin);
+        QBrush brushsalida(Qt::black);
+        if(VeriBom==0){
+        bomba= scene->addEllipse(PerSal.front()->x()+47,PerSal.front()->y()+47,35,35,pen3,brushsalida);
+        timer= new QTimer(this);
+        connect(timer,SIGNAL(timeout()),this, SLOT(eliminarBomba()) );
+        timer->start(2000);
+        VeriBom=1;}
+        break;
     }
     ui->graphicsView->setSceneRect(PerSal.front()->x(),PerSal.front()->y(),44,44);
 }
+
+void Papabom::eliminarBomba()
+{
+    scene->removeItem(bomba);
+    timer->stop();
+    VeriBom=0;
+}
+// funcion para eliminar items
 
 

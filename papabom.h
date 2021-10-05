@@ -10,7 +10,7 @@
 #include <QRandomGenerator>
 #include <QTimer>
 #include <QDebug>
-
+#include<ctime>
 
 
 #define Ruta_imagenb "../Papabom/imagenes/gris.jpg"
@@ -32,21 +32,27 @@ class Papabom : public QMainWindow
 public:
     Papabom(QWidget *parent = nullptr);
     ~Papabom();
+
     list <QGraphicsRectItem *> PerSal;
 
 protected:
     void keyPressEvent(QKeyEvent *e);
-
-
+    void delay(int secs) {
+       for(int i = (time(NULL) + secs); time(NULL) != i; time(NULL));
+     }
+public slots:
+    void eliminarBomba();
 
 private:
     Ui::Papabom *ui;
     QGraphicsScene *scene;
+    QGraphicsItem *bomba;
     list <QGraphicsRectItem *> bloques;
     list <QGraphicsRectItem *> cajas;
     list <QGraphicsRectItem *> enemigos;
    // list <QGraphicsRectItem *> PerSal;
-
+    QTimer *timer;
+    int VeriBom=0;
 
 
 
