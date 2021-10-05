@@ -6,7 +6,7 @@
 #include <QGraphicsRectItem>
 #include <QImage>
 #include <list>
-
+#include <QKeyEvent>
 #include <QRandomGenerator>
 #include <QTimer>
 
@@ -32,6 +32,8 @@ public:
     Papabom(QWidget *parent = nullptr);
     ~Papabom();
 
+protected:
+    void keyPressEvent(QkeyEvent *e);
 
 
 
