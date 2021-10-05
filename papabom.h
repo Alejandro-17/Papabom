@@ -5,8 +5,11 @@
 #include <QGraphicsScene>
 #include <QGraphicsRectItem>
 #include <QImage>
-#include <vector>
+#include <list>
+
 #include <QRandomGenerator>
+#include <QTimer>
+
 
 
 #define Ruta_imagenb "../Papabom/imagenes/gris.jpg"
@@ -29,15 +32,16 @@ public:
     Papabom(QWidget *parent = nullptr);
     ~Papabom();
 
-    void KeyPress
+
+
 
 private:
     Ui::Papabom *ui;
     QGraphicsScene *scene;
-    vector <QGraphicsRectItem *> bloques;
-    vector <QGraphicsRectItem *> cajas;
-    vector <QGraphicsRectItem *> enemigos;
-    vector <QGraphicsRectItem *> PerSal;
+    list <QGraphicsRectItem *> bloques;
+    list <QGraphicsRectItem *> cajas;
+    list <QGraphicsRectItem *> enemigos;
+    list <QGraphicsRectItem *> PerSal;
 
 
 

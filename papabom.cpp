@@ -1,6 +1,8 @@
 #include "papabom.h"
 #include "ui_papabom.h"
 
+
+
 Papabom::Papabom(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::Papabom)
@@ -40,7 +42,8 @@ Papabom::Papabom(QWidget *parent)
 
      //creación personaje
      PerSal.push_back(scene->addRect(44,44,ancho,alto,pen2,brushpersonaje));
-
+     PerSal.front()->setFlag(QGraphicsItem::ItemIsFocusable);
+     PerSal.front()->setFocus();
 
      //Creación de la puerta
 
@@ -95,4 +98,5 @@ Papabom::~Papabom()
 {
     delete ui;
 }
+
 
