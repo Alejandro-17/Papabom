@@ -8,26 +8,18 @@ Papabom::Papabom(QWidget *parent)
     ui->setupUi(this);
 
     scene = new QGraphicsScene(); //Creo escena
-    QPen pen(Qt::gray, 1, Qt::SolidLine, Qt::SquareCap, Qt::RoundJoin); // Creo contorno para bloques fijos
-    QImage im(Ruta_imagen); //Leo imagen en la direccion ruta_imagen
-     QBrush brush(im); // creo brocha con textura gris
-
-     ////// Mapa de escenario ///////
-     char mapabloques[13][23]={
-         {'1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1'},
-         {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
-         {'1','0','1','0','1','0','1','0','1','0','1','0','1','0','1','0','1','0','1','0','1','0','1'},
-         {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
-         {'1','0','1','0','1','0','1','0','1','0','1','0','1','0','1','0','1','0','1','0','1','0','1'},
-         {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
-         {'1','0','1','0','1','0','1','0','1','0','1','0','1','0','1','0','1','0','1','0','1','0','1'},
-         {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
-         {'1','0','1','0','1','0','1','0','1','0','1','0','1','0','1','0','1','0','1','0','1','0','1'},
-         {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
-         {'1','0','1','0','1','0','1','0','1','0','1','0','1','0','1','0','1','0','1','0','1','0','1'},
-         {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
-         {'1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1'}
-     };
+    QPen pen(Qt::gray, 1, Qt::SolidLine, Qt::SquareCap, Qt::RoundJoin);
+    QPen pen2(Qt::darkGreen, 0, Qt::SolidLine, Qt::SquareCap, Qt::RoundJoin);// Creo contorno para bloques fijos
+    QPen pen3(Qt::black, 0, Qt::SolidLine, Qt::SquareCap, Qt::RoundJoin); //contorno negro
+    QImage im(Ruta_imagenb); //Leo imagen de bloques en la direccion ruta_imagen
+    QBrush brushbloques(im); // creo brocha con textura gris
+    QImage caja(Ruta_caja); //Leo imagen de caja en la direccion ruta_caja
+    QBrush brushcajas(caja); // creo brocha con textura de caja
+    QImage enemigo(Ruta_enemigo); //Leo imagen de enemigo en la direccion ruta_caja
+    QBrush brushenemigo(enemigo); // creo brocha con textura de enemigo
+    QImage personaje(Ruta_personaje); //Leo imagen de personaje en la direccion ruta_caja
+    QBrush brushpersonaje(personaje); // creo brocha con textura de personaje
+    QBrush brushsalida(Qt::black);// creo brocha para salida
 
      //algoritmo para creacion de bloques en la plataforma
      int ancho=44, alto=44; // dimensiones bloques
@@ -37,7 +29,38 @@ Papabom::Papabom(QWidget *parent)
 
           for(int j=0; j<23;j++){
           if(mapabloques[i][j]==49){
-              bloques.push_back(scene->addRect(posx,posy,ancho,alto,pen,brush));
+              bloques.push_back(scene->addRect(posx,posy,ancho,alto,pen,brushbloques));
+              posx+=44;
+          }
+
+          else posx+=44;
+          }
+           posy+=44;
+      }
+
+     //creación personaje
+     PerSal.push_back(scene->addRect(44,44,ancho,alto,pen2,brushpersonaje));
+
+
+     //Creación de la puerta
+
+     unsigned int ram1,ram2,verificador=0;
+     while(verificador==0){
+     ram1= QRandomGenerator::global()->bounded(12);
+     ram2= QRandomGenerator::global()->bounded(22);
+     if (mapabloques[ram1][ram2]==50){
+         PerSal.push_back(scene->addRect(ram2*44,ram1*44,ancho,alto,pen3,brushsalida));
+         verificador=1;
+     }}
+
+     //algoritmo para la creación de las cajas
+     posy=0;
+     for (int i=0; i<13 ; i++ ) {
+          int posx=0;
+
+          for(int j=0; j<23;j++){
+          if(mapabloques[i][j]==50){
+              cajas.push_back(scene->addRect(posx,posy,ancho,alto,pen2,brushcajas));
               posx+=44;
           }
           else posx+=44;
@@ -45,8 +68,27 @@ Papabom::Papabom(QWidget *parent)
            posy+=44;
       }
 
-      ui->graphicsView->setScene(scene);
-      ui->graphicsView->show();
+    //Creación de enemigos
+     posy=0;
+     for (int i=0; i<13 ; i++ ) {
+          int posx=0;
+
+          for(int j=0; j<23;j++){
+          if(mapabloques[i][j]==51){
+              enemigos.push_back(scene->addRect(posx,posy,ancho,alto,pen2,brushenemigo));
+              posx+=44;
+          }
+          else posx+=44;
+          }
+           posy+=44;
+      }
+
+
+
+
+
+     ui->graphicsView->setScene(scene);
+
 }
 
 Papabom::~Papabom()
