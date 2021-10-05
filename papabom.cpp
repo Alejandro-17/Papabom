@@ -77,7 +77,7 @@ Papabom::Papabom(QWidget *parent)
 
           for(int j=0; j<23;j++){
           if(mapabloques[i][j]==51){
-              enemigos.push_back(scene->addRect(posx,posy,ancho,alto,pen2,brushenemigo));
+              enemigos.push_back(scene->addRect(posx,posy+1,ancho,alto-2,pen2,brushenemigo));
               posx+=44;
           }
           else posx+=44;
@@ -87,7 +87,9 @@ Papabom::Papabom(QWidget *parent)
 
 
 
-
+     timerenemy= new QTimer(this);
+     connect(timerenemy,SIGNAL(timeout()),this, SLOT(moverenemigo()) );
+     timerenemy->start(200);
 
      ui->graphicsView->setScene(scene);
 
@@ -136,6 +138,7 @@ void Papabom::keyPressEvent(QKeyEvent *e)
             PerSal.front()->setPos(PerSal.front()->x()-44,PerSal.front()->y());
             colision=false;
         }}
+
         break;
 
 
@@ -185,12 +188,120 @@ void Papabom::keyPressEvent(QKeyEvent *e)
     ui->graphicsView->setSceneRect(PerSal.front()->x(),PerSal.front()->y(),44,44);
 }
 
-void Papabom::eliminarBomba()
-{
-    scene->removeItem(bomba);
-    timer->stop();
-    VeriBom=0;
-}
-// funcion para eliminar items
+    //slot para eliminar bombas
+    void Papabom::eliminarBomba()
+    {
+        scene->removeItem(bomba);
+        timer->stop();
+        VeriBom=0;
+    }
+
+
+
+    bool coliderxenemyb=false,coliderxenemyc=false;
+    int  tipodemovimiento1=0,tipodemovimiento2=0,tipodemovimiento3=0,tipodemovimiento4=0;
+    void Papabom::moverenemigo()
+    {
+       //Enemigo1
+       if(tipodemovimiento1==0){
+       enemigos.at(0)->setPos(enemigos.at(0)->x()-10,enemigos.at(0)->y());
+       for(auto blo:bloques){
+           coliderxenemyb= enemigos.at(0)->collidesWithItem(blo);
+       for(auto caj:cajas){
+           coliderxenemyc= enemigos.at(0)->collidesWithItem(caj);
+       if(coliderxenemyb==true || coliderxenemyc==true){
+           enemigos.at(0)->setPos(enemigos.at(0)->x()+10,enemigos.at(0)->y());
+           coliderxenemyb=false;
+           tipodemovimiento1=1;
+       }}}}
+
+       if(tipodemovimiento1==1){
+           enemigos.at(0)->setPos(enemigos.at(0)->x()+10,enemigos.at(0)->y());
+           for(auto blo:bloques){
+               coliderxenemyb= enemigos.at(0)->collidesWithItem(blo);
+           for(auto caj:cajas){
+               coliderxenemyc= enemigos.at(0)->collidesWithItem(caj);
+           if(coliderxenemyb==true || coliderxenemyc==true){
+               enemigos.at(0)->setPos(enemigos.at(0)->x()-10,enemigos.at(0)->y());
+               coliderxenemyb=false;
+               tipodemovimiento1=0;
+           }}}}
+
+       //enemigo2
+       if(tipodemovimiento2==0){
+       enemigos.at(1)->setPos(enemigos.at(1)->x()-10,enemigos.at(1)->y());
+       for(auto blo:bloques){
+           coliderxenemyb= enemigos.at(1)->collidesWithItem(blo);
+       for(auto caj:cajas){
+           coliderxenemyc= enemigos.at(1)->collidesWithItem(caj);
+       if(coliderxenemyb==true || coliderxenemyc==true){
+           enemigos.at(1)->setPos(enemigos.at(1)->x()+10,enemigos.at(1)->y());
+           coliderxenemyb=false;
+           tipodemovimiento2=1;
+       }}}}
+
+       if(tipodemovimiento2==1){
+           enemigos.at(1)->setPos(enemigos.at(1)->x()+10,enemigos.at(1)->y());
+           for(auto blo:bloques){
+               coliderxenemyb= enemigos.at(1)->collidesWithItem(blo);
+           for(auto caj:cajas){
+               coliderxenemyc= enemigos.at(1)->collidesWithItem(caj);
+           if(coliderxenemyb==true || coliderxenemyc==true){
+               enemigos.at(1)->setPos(enemigos.at(1)->x()-10,enemigos.at(1)->y());
+               coliderxenemyb=false;
+               tipodemovimiento2=0;
+           }}}}
+
+       //enemigo3
+       if(tipodemovimiento3==0){
+       enemigos.at(2)->setPos(enemigos.at(2)->x()-10,enemigos.at(2)->y());
+       for(auto blo:bloques){
+           coliderxenemyb= enemigos.at(2)->collidesWithItem(blo);
+       for(auto caj:cajas){
+           coliderxenemyc= enemigos.at(2)->collidesWithItem(caj);
+       if(coliderxenemyb==true || coliderxenemyc==true){
+           enemigos.at(2)->setPos(enemigos.at(2)->x()+10,enemigos.at(2)->y());
+           coliderxenemyb=false;
+           tipodemovimiento3=1;
+       }}}}
+
+       if(tipodemovimiento3==1){
+           enemigos.at(2)->setPos(enemigos.at(2)->x()+10,enemigos.at(2)->y());
+           for(auto blo:bloques){
+               coliderxenemyb= enemigos.at(2)->collidesWithItem(blo);
+           for(auto caj:cajas){
+               coliderxenemyc= enemigos.at(2)->collidesWithItem(caj);
+           if(coliderxenemyb==true || coliderxenemyc==true){
+               enemigos.at(2)->setPos(enemigos.at(2)->x()-10,enemigos.at(2)->y());
+               coliderxenemyb=false;
+               tipodemovimiento3=0;
+           }}}}
+
+        //enemigo4
+       if(tipodemovimiento4==0){
+       enemigos.at(3)->setPos(enemigos.at(3)->x()-10,enemigos.at(3)->y());
+       for(auto blo:bloques){
+           coliderxenemyb= enemigos.at(3)->collidesWithItem(blo);
+       for (auto caj:cajas){
+           coliderxenemyc=enemigos.at(3)->collidesWithItem(caj);
+       if(coliderxenemyb==true || coliderxenemyc==true){
+           enemigos.at(3)->setPos(enemigos.at(3)->x()+10,enemigos.at(3)->y());
+           coliderxenemyb=false;
+           tipodemovimiento4=1;
+       }}}}
+
+       if(tipodemovimiento4==1){
+           enemigos.at(3)->setPos(enemigos.at(3)->x()+10,enemigos.at(3)->y());
+           for(auto blo:bloques){
+               coliderxenemyb= enemigos.at(3)->collidesWithItem(blo);
+           for(auto caj:cajas){
+               coliderxenemyc=enemigos.at(3)->collidesWithItem(caj);
+           if(coliderxenemyb==true || coliderxenemyc==true){
+               enemigos.at(3)->setPos(enemigos.at(3)->x()-10,enemigos.at(3)->y());
+               coliderxenemyb=false;
+               tipodemovimiento4=0;
+           }}}}
+    }
+
 
 
