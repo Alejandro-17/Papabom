@@ -86,12 +86,20 @@ Papabom::Papabom(QWidget *parent)
       }
 
 
-
+     //activo slot moverenemigo cada cierto tiempo con ayuda de la clase timer
      timerenemy= new QTimer(this);
      connect(timerenemy,SIGNAL(timeout()),this, SLOT(moverenemigo()) );
      timerenemy->start(200);
 
+     //activo slot para tiempo de juego
+     tiempo= new QTimer(this);
+     connect(tiempo,SIGNAL(timeout()),this, SLOT(on_tiempo_overflow()) );
+     tiempo->start(1000);
+
+
      ui->graphicsView->setScene(scene);
+
+
 
 }
 
@@ -104,7 +112,7 @@ Papabom::~Papabom()
 //--------------------------------------------------------
 // Movimiento de personaje y colision con cajas y bloques|
 //--------------------------------------------------------
-bool colision=false; //Para verificar colission
+bool colision=false,colision2=false; //Para verificar colission
 void Papabom::keyPressEvent(QKeyEvent *e)
 {
     switch (e->key()) {
@@ -122,6 +130,15 @@ void Papabom::keyPressEvent(QKeyEvent *e)
             PerSal.front()->setPos(PerSal.front()->x()+44,PerSal.front()->y());
             colision=false;
         }}
+        for(auto e:enemigos){
+            colision2=PerSal.front()->collidesWithItem(e);
+        if(colision2==true){
+           vidas+=1;
+           ui->Vidas->display(2-vidas);
+           PerSal.front()->setPos(0,0);
+           colision2=false;
+           contador=0;
+        }}
         break;
 
     case Qt::Key_D:
@@ -138,7 +155,15 @@ void Papabom::keyPressEvent(QKeyEvent *e)
             PerSal.front()->setPos(PerSal.front()->x()-44,PerSal.front()->y());
             colision=false;
         }}
-
+        for(auto e:enemigos){
+            colision2=PerSal.front()->collidesWithItem(e);
+        if(colision2==true){
+           vidas+=1;
+           ui->Vidas->display(2-vidas);
+           PerSal.front()->setPos(0,0);
+           colision2=false;
+           contador=0;
+        }}
         break;
 
 
@@ -156,6 +181,15 @@ void Papabom::keyPressEvent(QKeyEvent *e)
             PerSal.front()->setPos(PerSal.front()->x(),PerSal.front()->y()+44);
             colision=false;
         }}
+        for(auto e:enemigos){
+            colision2=PerSal.front()->collidesWithItem(e);
+        if(colision2==true){
+           vidas+=1;
+           ui->Vidas->display(2-vidas);
+           PerSal.front()->setPos(0,0);
+           colision2=false;
+           contador=0;
+        }}
         break;
 
     case Qt::Key_S:
@@ -170,10 +204,20 @@ void Papabom::keyPressEvent(QKeyEvent *e)
             colision=PerSal.front()->collidesWithItem(c);
         if (colision==true){
             PerSal.front()->setPos(PerSal.front()->x(),PerSal.front()->y()-44);
-            colision=false;
+            colision=false;            
+        }}
+        for(auto e:enemigos){
+            colision2=PerSal.front()->collidesWithItem(e);
+        if(colision2==true){
+           vidas+=1;
+           ui->Vidas->display(2-vidas);
+           PerSal.front()->setPos(0,0);
+           colision2=false;
+           contador=0;
+
         }}
         break;
-
+//En este caso pongo las bombas en el escenario con la tecla space
     case Qt::Key_Space:
         QPen pen3(Qt::black, 0, Qt::SolidLine, Qt::SquareCap, Qt::RoundJoin);
         QBrush brushsalida(Qt::black);
@@ -190,16 +234,20 @@ void Papabom::keyPressEvent(QKeyEvent *e)
 
     //slot para eliminar bombas
     void Papabom::eliminarBomba()
-    {
+    {        
         scene->removeItem(bomba);
         timer->stop();
+
         VeriBom=0;
     }
 
 
-
+//--------------------------------------------------
+/// movimiento enemigos con colisiones bloque-caja |
+//--------------------------------------------------
     bool coliderxenemyb=false,coliderxenemyc=false;
     int  tipodemovimiento1=0,tipodemovimiento2=0,tipodemovimiento3=0,tipodemovimiento4=0;
+
     void Papabom::moverenemigo()
     {
        //Enemigo1
@@ -212,6 +260,7 @@ void Papabom::keyPressEvent(QKeyEvent *e)
        if(coliderxenemyb==true || coliderxenemyc==true){
            enemigos.at(0)->setPos(enemigos.at(0)->x()+10,enemigos.at(0)->y());
            coliderxenemyb=false;
+           coliderxenemyc=false;
            tipodemovimiento1=1;
        }}}}
 
@@ -301,7 +350,22 @@ void Papabom::keyPressEvent(QKeyEvent *e)
                coliderxenemyb=false;
                tipodemovimiento4=0;
            }}}}
+        if(vidas==2) exit(0);
     }
 
 
+
+
+
+// Slot para controlar tiempo de juego
+
+void Papabom::on_tiempo_overflow()
+{
+    contador+=1;
+    ui->tiempo->display(200-contador);
+    if(contador==200){
+        contador=0;
+        vidas+=1;
+    }
+}
 

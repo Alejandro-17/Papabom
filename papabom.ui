@@ -162,7 +162,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="vidas">
+      <widget class="QLabel" name="vidaslabel">
        <property name="font">
         <font>
          <pointsize>20</pointsize>

@@ -34,16 +34,20 @@ public:
     Papabom(QWidget *parent = nullptr);
     ~Papabom();
 
-    list <QGraphicsRectItem *> PerSal;
+
 
 protected:
     void keyPressEvent(QKeyEvent *e);
     void delay(int secs) {
        for(int i = (time(NULL) + secs); time(NULL) != i; time(NULL));
      }
-public slots:
+private slots:
     void eliminarBomba();
     void moverenemigo();
+
+
+
+    void on_tiempo_overflow();
 
 private:
     Ui::Papabom *ui;
@@ -51,11 +55,15 @@ private:
     QGraphicsItem *bomba;
     list <QGraphicsRectItem *> bloques;
     list <QGraphicsRectItem *> cajas;
+    list <QGraphicsRectItem *> explocion;
     vector <QGraphicsRectItem *> enemigos;
-   // list <QGraphicsRectItem *> PerSal;
-    QTimer *timer;
+    list <QGraphicsRectItem *> PerSal;
+    QTimer *timer,*tiempo;
     QTimer *timerenemy;
-    int VeriBom=0;
+    int VeriBom=0,vidas=0;
+    int contador=0;
+
+
 
 
 
