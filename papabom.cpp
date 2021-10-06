@@ -137,7 +137,7 @@ void Papabom::keyPressEvent(QKeyEvent *e)
            ui->Vidas->display(2-vidas);
            PerSal.front()->setPos(0,0);
            colision2=false;
-           contador=0;
+
         }}
         break;
 
@@ -162,7 +162,7 @@ void Papabom::keyPressEvent(QKeyEvent *e)
            ui->Vidas->display(2-vidas);
            PerSal.front()->setPos(0,0);
            colision2=false;
-           contador=0;
+
         }}
         break;
 
@@ -188,7 +188,7 @@ void Papabom::keyPressEvent(QKeyEvent *e)
            ui->Vidas->display(2-vidas);
            PerSal.front()->setPos(0,0);
            colision2=false;
-           contador=0;
+
         }}
         break;
 
@@ -213,7 +213,7 @@ void Papabom::keyPressEvent(QKeyEvent *e)
            ui->Vidas->display(2-vidas);
            PerSal.front()->setPos(0,0);
            colision2=false;
-           contador=0;
+
 
         }}
         break;
@@ -246,6 +246,12 @@ void Papabom::keyPressEvent(QKeyEvent *e)
               ui->puntos->display(puntos);
               colbombaxcaja=false;
           }
+        }
+        colbombaxcaja=PerSal.front()->collidesWithItem(bomba);
+        if(colbombaxcaja==true){
+            vidas+=1;
+            PerSal.front()->setPos(0,0);
+            ui->Vidas->display(vidas);
         }
         //Elimino bomba
         scene->removeItem(bomba);
