@@ -222,7 +222,7 @@ void Papabom::keyPressEvent(QKeyEvent *e)
         QPen pen3(Qt::black, 0, Qt::SolidLine, Qt::SquareCap, Qt::RoundJoin);
         QBrush brushsalida(Qt::black);
         if(VeriBom==0){
-        bomba= scene->addEllipse(PerSal.front()->x()+47,PerSal.front()->y()+47,35,35,pen3,brushsalida);
+        bomba= scene->addEllipse(PerSal.front()->x()+44,PerSal.front()->y()+44,45,45,pen3,brushsalida);
         timer= new QTimer(this);
         connect(timer,SIGNAL(timeout()),this, SLOT(eliminarBomba()) );
         timer->start(2000);
@@ -233,8 +233,21 @@ void Papabom::keyPressEvent(QKeyEvent *e)
 }
 
     //slot para eliminar bombas
+    bool colbombaxcaja=false;
     void Papabom::eliminarBomba()
     {        
+        // Elimino cajas alcanzadas por las bombas y sumo puntos
+        for(auto i:cajas){
+          colbombaxcaja=bomba->collidesWithItem(i);
+          if(colbombaxcaja==true){
+              scene->removeItem(i);
+              cajas.remove(i);
+              puntos+=100;
+              ui->puntos->display(puntos);
+              colbombaxcaja=false;
+          }
+        }
+        //Elimino bomba
         scene->removeItem(bomba);
         timer->stop();
 
@@ -358,7 +371,7 @@ void Papabom::keyPressEvent(QKeyEvent *e)
 
 
 // Slot para controlar tiempo de juego
-
+bool colPersoxpuerta=false;
 void Papabom::on_tiempo_overflow()
 {
     contador+=1;
@@ -367,5 +380,7 @@ void Papabom::on_tiempo_overflow()
         contador=0;
         vidas+=1;
     }
+    colPersoxpuerta=PerSal.front()->collidesWithItem(PerSal.back());
+    if(colPersoxpuerta==true)exit(0);
 }
 

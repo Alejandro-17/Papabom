@@ -49,6 +49,8 @@ private slots:
 
     void on_tiempo_overflow();
 
+
+
 private:
     Ui::Papabom *ui;
     QGraphicsScene *scene;
@@ -62,7 +64,7 @@ private:
     QTimer *timerenemy;
     int VeriBom=0,vidas=0;
     int contador=0;
-
+    int puntos=0;
 
 
 
