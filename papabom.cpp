@@ -21,7 +21,8 @@ Papabom::Papabom(QWidget *parent)
     QBrush brushenemigo(enemigo); // creo brocha con textura de enemigo
     QImage personaje(Ruta_personaje); //Leo imagen de personaje en la direccion ruta_caja
     QBrush brushpersonaje(personaje); // creo brocha con textura de personaje
-    QBrush brushsalida(Qt::black);// creo brocha para salida
+    QImage puerta(Ruta_puerta);//Leo imagen con textura de puerta
+    QBrush brushpuerta(puerta);// creo brocha para salida
 
      //algoritmo para creacion de bloques en la plataforma
      int ancho=44, alto=44; // dimensiones bloques
@@ -51,7 +52,7 @@ Papabom::Papabom(QWidget *parent)
      ram1= QRandomGenerator::global()->bounded(12);
      ram2= QRandomGenerator::global()->bounded(22);
      if (mapabloques[ram1][ram2]==50){
-         PerSal.push_back(scene->addRect(ram2*44,ram1*44,ancho,alto,pen3,brushsalida));
+         PerSal.push_back(scene->addRect(ram2*44,ram1*44,ancho,alto,pen2,brushpuerta));
          verificador=1;
      }}
 

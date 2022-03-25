@@ -18,6 +18,7 @@
 #define Ruta_caja "../Papabom/imagenes/caja.jpg"
 #define Ruta_enemigo "../Papabom/imagenes/enemigo.png"
 #define Ruta_personaje "../Papabom/imagenes/personaje.png"
+#define Ruta_puerta "../Papabom/imagenes/puerta.png"
 
 
 using namespace std;
@@ -38,9 +39,7 @@ public:
 
 protected:
     void keyPressEvent(QKeyEvent *e);
-    void delay(int secs) {
-       for(int i = (time(NULL) + secs); time(NULL) != i; time(NULL));
-     }
+
 private slots:
     void eliminarBomba();
     void moverenemigo();
