@@ -19,7 +19,7 @@
 #define Ruta_enemigo "../Papabom/imagenes/enemigo.png"
 #define Ruta_personaje "../Papabom/imagenes/personaje.png"
 #define Ruta_puerta "../Papabom/imagenes/puerta.png"
-
+#define Ruta_bomba "../Papabom/imagenes/bomba.png"
 
 using namespace std;
 
@@ -58,6 +58,7 @@ private:
     list <QGraphicsRectItem *> cajas;
     list <QGraphicsRectItem *> explocion;
     vector <QGraphicsRectItem *> enemigos;
+    vector <QGraphicsRectItem *>::iterator it;
     list <QGraphicsRectItem *> PerSal;
     QTimer *timer,*tiempo;
     QTimer *timerenemy;

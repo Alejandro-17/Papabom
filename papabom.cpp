@@ -220,8 +220,10 @@ void Papabom::keyPressEvent(QKeyEvent *e)
         break;
 //En este caso pongo las bombas en el escenario con la tecla space
     case Qt::Key_Space:
-        QPen pen3(Qt::black, 0, Qt::SolidLine, Qt::SquareCap, Qt::RoundJoin);
-        QBrush brushsalida(Qt::black);
+        //QPen pen3(Qt::darkGreen, 0, Qt::SolidLine, Qt::SquareCap, Qt::RoundJoin);
+        QPen pen3(QColor(0,0,0,0));
+        QImage bombaI(Ruta_bomba); //Leo imagen con textura de bomba
+        QBrush brushsalida(bombaI);
         if(VeriBom==0){
         bomba= scene->addEllipse(PerSal.front()->x()+44,PerSal.front()->y()+44,45,45,pen3,brushsalida);
         timer= new QTimer(this);
@@ -234,7 +236,7 @@ void Papabom::keyPressEvent(QKeyEvent *e)
 }
 
     //slot para eliminar bombas
-    bool colbombaxcaja=false;
+    bool colbombaxcaja=false, colbombaxenemy=false;
     void Papabom::eliminarBomba()
     {        
         // Elimino cajas alcanzadas por las bombas y sumo puntos
@@ -254,6 +256,20 @@ void Papabom::keyPressEvent(QKeyEvent *e)
             PerSal.front()->setPos(0,0);
             ui->Vidas->display(vidas);
         }
+
+        //colisioón bomba x enemy
+        for(auto e:enemigos){
+            colbombaxenemy=bomba->collidesWithItem(e);
+            if(colbombaxenemy==true){
+                scene->removeItem(e);
+                //it=enemigos.begin();
+                //enemigos.erase(enemigos.begin()+1);
+                puntos+=200;
+                ui->puntos->display(puntos);
+                colbombaxenemy=false;
+            }
+        }
+
         //Elimino bomba
         scene->removeItem(bomba);
         timer->stop();
